@@ -1,4 +1,5 @@
 import type React from "react"
+import { Suspense } from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -31,10 +32,14 @@ export default function RootLayout({
                 <a href="/traffic-prediction" className="text-foreground font-bold text-lg hover:text-primary transition-colors">
                   Traffic Prediction
                 </a>
-                <MainNav />
+                <Suspense fallback={null}>
+                  <MainNav />
+                </Suspense>
               </div>
               <div className="flex items-center gap-4">
-                <AuthNav />
+                <Suspense fallback={null}>
+                  <AuthNav />
+                </Suspense>
                 <ThemeToggle />
               </div>
             </div>

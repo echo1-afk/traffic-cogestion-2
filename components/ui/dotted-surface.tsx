@@ -94,6 +94,15 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 
     let count = 0;
 
+    sceneRef.current = {
+      scene,
+      camera,
+      renderer,
+      particles: [points],
+      animationId: 0,
+      count,
+    };
+
     // Animation function
     const animate = (): void => {
       const animationId = requestAnimationFrame(animate);
@@ -130,7 +139,9 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
       count += 0.1;
 
       // Store the animation ID for cleanup
-      sceneRef.current!.animationId = animationId;
+      if (sceneRef.current) {
+        sceneRef.current.animationId = animationId;
+      }
     };
 
     // Handle window resize
@@ -144,16 +155,6 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 
     // Start animation
     animate();
-
-    // Store references
-    sceneRef.current = {
-      scene,
-      camera,
-      renderer,
-      particles: [points],
-      animationId: 0, // Will be updated in animate function
-      count,
-    };
 
     // Cleanup function
     return () => {
